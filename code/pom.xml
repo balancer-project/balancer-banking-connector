@@ -25,12 +25,19 @@
     </properties>
 
     <modules>
+        <module>api/rest-server</module>
         <module>boot</module>
         <module>reports/jacoco-report-aggregate</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.juancrrn</groupId>
+                <artifactId>balancer-banking-connector-rest-server</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.juancrrn</groupId>
                 <artifactId>balancer-banking-connector-boot</artifactId>

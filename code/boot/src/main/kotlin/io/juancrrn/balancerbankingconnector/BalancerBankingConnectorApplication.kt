@@ -1,4 +1,4 @@
-package com.docline.prescriptionasproduct
+package io.juancrrn.balancerbankingconnector
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
