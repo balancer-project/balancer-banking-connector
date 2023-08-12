@@ -22,6 +22,7 @@
         <jacoco.version>0.8.10</jacoco.version>
         <maven-surfire-plugin.version>3.1.2</maven-surfire-plugin.version>
         <ktlint.version>0.50.0</ktlint.version>
+        <plaid.version>9.0.0</plaid.version>
     </properties>
 
     <modules>
@@ -39,19 +40,16 @@
                 <artifactId>balancer-banking-connector-boot</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>io.juancrrn</groupId>
                 <artifactId>balancer-banking-connector-domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>io.juancrrn</groupId>
                 <artifactId>balancer-banking-connector-repository</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>io.juancrrn</groupId>
                 <artifactId>balancer-banking-connector-rest-server</artifactId>
@@ -63,6 +61,12 @@
                 <artifactId>netty-resolver-dns-native-macos</artifactId>
                 <version>4.1.96.Final</version>
                 <classifier>osx-aarch_64</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>com.plaid</groupId>
+                <artifactId>plaid-java</artifactId>
+                <version>${plaid.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
