@@ -27,6 +27,8 @@
     <modules>
         <module>api/rest-server</module>
         <module>boot</module>
+        <module>domain</module>
+        <module>infrastructure/repository</module>
         <module>reports/jacoco-report-aggregate</module>
     </modules>
 
@@ -34,13 +36,25 @@
         <dependencies>
             <dependency>
                 <groupId>io.juancrrn</groupId>
-                <artifactId>balancer-banking-connector-rest-server</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <artifactId>balancer-banking-connector-boot</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>io.juancrrn</groupId>
-                <artifactId>balancer-banking-connector-boot</artifactId>
+                <artifactId>balancer-banking-connector-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.juancrrn</groupId>
+                <artifactId>balancer-banking-connector-repository</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.juancrrn</groupId>
+                <artifactId>balancer-banking-connector-rest-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
