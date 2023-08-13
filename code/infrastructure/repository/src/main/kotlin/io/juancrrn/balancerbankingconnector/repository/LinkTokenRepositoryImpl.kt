@@ -1,13 +1,13 @@
 package io.juancrrn.balancerbankingconnector.repository
 
+import com.plaid.client.model.CountryCode
+import com.plaid.client.model.LinkTokenCreateRequest
+import com.plaid.client.model.LinkTokenCreateRequestUser
+import com.plaid.client.model.Products
+import com.plaid.client.request.PlaidApi
 import io.juancrrn.balancerbankingconnector.repositories.LinkTokenRepository
 import io.juancrrn.balancerbankingconnector.valueobjects.LinkToken
 import io.juancrrn.balancerbankingconnector.valueobjects.UserId
-import io.juancrrn.plaidwebclient.api.PlaidApi
-import io.juancrrn.plaidwebclient.model.CountryCode
-import io.juancrrn.plaidwebclient.model.LinkTokenCreateRequest
-import io.juancrrn.plaidwebclient.model.LinkTokenCreateRequestUser
-import io.juancrrn.plaidwebclient.model.Products
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.stereotype.Repository
 
@@ -26,7 +26,8 @@ class LinkTokenRepositoryImpl(
 
         val linkToken = plaidApi
             .linkTokenCreate(request)
-            .awaitSingle()["link_token"] as String // TODO: fix property generation and mapping
+            .awaitSingle()
+            .linkToken
         // TODO: handle errors
 
         return LinkToken(linkToken)

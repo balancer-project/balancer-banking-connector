@@ -2,3 +2,7 @@ plaid:
   base-url: https://sandbox.plaid.com
   client-id: plaid-client-id
   secret: plaid-secret
+
+rest-server:
+  cors:
+    allowed-origins: http://localhost:3000

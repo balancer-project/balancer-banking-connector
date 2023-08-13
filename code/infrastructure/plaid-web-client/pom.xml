@@ -48,15 +48,17 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <generatorName>java</generatorName>
-                            <inputSpec>${project.basedir}/src/main/resources/openapi/openapi.yml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/openapi.yaml</inputSpec>
                             <output>${project.build.directory}/generated-sources/openapi</output>
-                            <invokerPackage>io.juancrrn.plaidwebclient</invokerPackage>
-                            <apiPackage>io.juancrrn.plaidwebclient.api</apiPackage>
-                            <modelPackage>io.juancrrn.plaidwebclient.model</modelPackage>
-                            <generateApiTests>false</generateApiTests>
-                            <generateModelTests>false</generateModelTests>
                             <library>webclient</library>
                             <skipValidateSpec>true</skipValidateSpec>
+                            <invokerPackage>com.plaid.client</invokerPackage>
+                            <apiPackage>com.plaid.client.request</apiPackage>
+                            <modelPackage>com.plaid.client.model</modelPackage>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateModelDocumentation>false</generateModelDocumentation>
 
                             <configOptions>
                                 <serializationLibrary>jackson</serializationLibrary>

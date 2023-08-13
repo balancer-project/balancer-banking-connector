@@ -16702,7 +16702,7 @@ components:
       - client_name
     LinkTokenCreateResponse:
       type: object
-      additionalProperties: true
+      # additionalProperties: true
       description: LinkTokenCreateResponse defines the response schema for `/link/token/create`
       properties:
         link_token:

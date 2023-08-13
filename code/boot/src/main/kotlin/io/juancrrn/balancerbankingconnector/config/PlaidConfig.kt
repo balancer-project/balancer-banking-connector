@@ -1,19 +1,26 @@
 package io.juancrrn.balancerbankingconnector.config
 
-import io.juancrrn.plaidwebclient.ApiClient
-import io.juancrrn.plaidwebclient.api.PlaidApi
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.plaid.client.ApiClient
+import com.plaid.client.request.PlaidApi
 import io.netty.handler.logging.LogLevel
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.http.client.reactive.ReactorClientHttpConnector
+import org.springframework.http.codec.json.Jackson2JsonDecoder
+import org.springframework.http.codec.json.Jackson2JsonEncoder
+import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.netty.http.client.HttpClient
 import reactor.netty.transport.logging.AdvancedByteBufFormat
 
 @Configuration
-class PlaidConfig {
+class PlaidConfig(
+    private val objectMapper: ObjectMapper,
+) {
 
     @Bean("plaidWebClientProperties")
     @ConfigurationProperties(prefix = "plaid")
@@ -25,8 +32,28 @@ class PlaidConfig {
     fun webClient(
         @Qualifier("plaidWebClientProperties") properties: WebClientProperties,
     ): WebClient {
+        val exchangeStrategies = ExchangeStrategies.builder()
+            .codecs { configurer ->
+                configurer.defaultCodecs().apply {
+                    jackson2JsonEncoder(Jackson2JsonEncoder(objectMapper, APPLICATION_JSON))
+                    jackson2JsonDecoder(Jackson2JsonDecoder(objectMapper, APPLICATION_JSON))
+                }
+            }.build()
+
+        val clientConnector = ReactorClientHttpConnector(
+            HttpClient
+                .create()
+                .wiretap(
+                    HttpClient::class.java.canonicalName,
+                    LogLevel.DEBUG,
+                    AdvancedByteBufFormat.TEXTUAL,
+                ),
+        )
+
         return WebClient.builder()
             .baseUrl(properties.baseUrl)
+            .exchangeStrategies(exchangeStrategies)
+            .clientConnector(clientConnector)
             .build()
     }
 
