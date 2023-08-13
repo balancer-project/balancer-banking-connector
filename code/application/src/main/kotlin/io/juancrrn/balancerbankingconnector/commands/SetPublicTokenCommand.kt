@@ -1,10 +1,11 @@
 package io.juancrrn.balancerbankingconnector.commands
 
-import io.juancrrn.balancerbankingconnector.valueobjects.LinkToken
 import java.util.*
 import javax.validation.constraints.NotNull
 
-data class CreateLinkTokenCommand(
+data class SetPublicTokenCommand(
     @field:NotNull
     val userId: UUID?,
-) : Command<LinkToken>
+    @field:NotNull
+    val publicToken: String?,
+) : Command<Unit>

@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component
 
 @Component
 class CreateLinkTokenUseCase(
+    // private val validator: Validator,
     private val linkTokenRepository: LinkTokenRepository,
 ) : CommandUseCase<CreateLinkTokenCommand, LinkToken> {
 
     override suspend fun dispatch(command: CreateLinkTokenCommand): LinkToken {
         // TODO: validate command, error handling, etc.
+        // validator.assertValid(command)
 
-        return linkTokenRepository.create(command.userId)
+        return linkTokenRepository.create(command.userId!!)
     }
 }

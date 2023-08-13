@@ -23,6 +23,9 @@
         <maven-surfire-plugin.version>3.1.2</maven-surfire-plugin.version>
         <ktlint.version>0.50.0</ktlint.version>
         <swagger.annotations.version>1.6.11</swagger.annotations.version>
+        <swagger-v3.annotations.version>2.2.15</swagger-v3.annotations.version>
+        <javax-annotation.version>1.3.2</javax-annotation.version>
+        <javax-validation.version>2.0.1.Final</javax-validation.version>
         <findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
     </properties>
 
@@ -107,15 +110,26 @@
                 <version>${swagger.annotations.version}</version>
             </dependency>
             <dependency>
-                <groupId>javax.annotation</groupId>
-                <artifactId>javax.annotation-api</artifactId>
-                <version>1.3.2</version>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-v3.annotations.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.google.code.findbugs</groupId>
                 <artifactId>jsr305</artifactId>
                 <version>${findbugs.jsr305.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>${javax-annotation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax-validation.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

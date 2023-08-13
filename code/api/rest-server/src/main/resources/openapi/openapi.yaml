@@ -1,0 +1,150 @@
+openapi: 3.0.3
+info:
+  title: Balancer Banking Connector
+  version: 0.0.1
+tags:
+  - name: Bank Account Link
+paths:
+  /v1/bank-account-link/create-link-token:
+    post:
+      operationId: createLinkToken
+      tags:
+        - Bank Account Link
+      summary: Creates a Link token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  format: uuid
+                  description: The id of the Balancer user for which to create the token
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateLinkTokenResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /v1/bank-account-link/set-public-token:
+    post:
+      operationId: setPublicToken
+      tags:
+        - Bank Account Link
+      summary: Sets a public token returned by Link
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  format: uuid
+                  description: The id of the Balancer user for which the token was created
+                publicToken:
+                  type: string
+                  description: The public token returned by Link
+      responses:
+        '204':
+          description: The public token was set successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  schemas:
+    Error:
+      type: object
+      description: A Problem Details Object
+      properties:
+        code:
+          type: string
+          description: Error code
+        description:
+          type: string
+          description: >-
+            A human-readable explanation specific to this occurrence of the
+            problem
+  responses:
+    CreateLinkTokenResponse:
+      description: A response containing a newly created Link token
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              linkToken:
+                type: string
+                description: The newly created Link token
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnexpectedError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'

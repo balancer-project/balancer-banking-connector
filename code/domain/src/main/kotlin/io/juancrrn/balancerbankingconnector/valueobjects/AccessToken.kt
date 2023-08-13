@@ -1,8 +1,8 @@
 package io.juancrrn.balancerbankingconnector.valueobjects
 
 /**
- * A Plaid Link token.
+ * A Plaid API access token.
  */
-data class LinkToken(
+data class AccessToken(
     val token: String,
 )

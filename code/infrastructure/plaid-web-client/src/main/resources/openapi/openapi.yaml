@@ -42030,7 +42030,7 @@ components:
       - public_token
     ItemPublicTokenExchangeResponse:
       type: object
-      additionalProperties: true
+      # additionalProperties: true
       description: ItemPublicTokenExchangeResponse defines the response schema for `/item/public_token/exchange`
       properties:
         access_token:

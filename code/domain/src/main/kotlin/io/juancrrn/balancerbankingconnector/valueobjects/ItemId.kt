@@ -3,6 +3,6 @@ package io.juancrrn.balancerbankingconnector.valueobjects
 import java.util.UUID
 
 /**
- * An identifier for a Balancer user.
+ * An identifier for a Plaid Item.
  */
-typealias UserId = UUID
+typealias ItemId = UUID
