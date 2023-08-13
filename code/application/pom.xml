@@ -8,10 +8,10 @@
         <groupId>io.juancrrn</groupId>
         <artifactId>balancer-banking-connector</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>balancer-banking-connector-repository</artifactId>
+    <artifactId>balancer-banking-connector-application</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
@@ -19,11 +19,6 @@
         <dependency>
             <groupId>io.juancrrn</groupId>
             <artifactId>balancer-banking-connector-domain</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.juancrrn</groupId>
-            <artifactId>balancer-banking-connector-plaid-web-client</artifactId>
         </dependency>
 
         <dependency>

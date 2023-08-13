@@ -22,19 +22,52 @@
         <jacoco.version>0.8.10</jacoco.version>
         <maven-surfire-plugin.version>3.1.2</maven-surfire-plugin.version>
         <ktlint.version>0.50.0</ktlint.version>
-        <plaid.version>9.0.0</plaid.version>
+        <swagger.annotations.version>1.6.11</swagger.annotations.version>
+        <findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
     </properties>
 
     <modules>
         <module>api/rest-server</module>
+        <module>application</module>
         <module>boot</module>
         <module>domain</module>
+        <module>infrastructure/plaid-web-client</module>
         <module>infrastructure/repository</module>
         <module>reports/jacoco-report-aggregate</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.projectreactor.kotlin</groupId>
+            <artifactId>reactor-kotlin-extensions</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-reactor</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.juancrrn</groupId>
+                <artifactId>balancer-banking-connector-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.juancrrn</groupId>
                 <artifactId>balancer-banking-connector-boot</artifactId>
@@ -44,6 +77,11 @@
                 <groupId>io.juancrrn</groupId>
                 <artifactId>balancer-banking-connector-domain</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.juancrrn</groupId>
+                <artifactId>balancer-banking-connector-plaid-web-client</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.juancrrn</groupId>
@@ -64,23 +102,23 @@
             </dependency>
 
             <dependency>
-                <groupId>com.plaid</groupId>
-                <artifactId>plaid-java</artifactId>
-                <version>${plaid.version}</version>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.annotations.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>${findbugs.jsr305.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>

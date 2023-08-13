@@ -1,4 +1,4 @@
 plaid:
-  env: sandbox
-  client_id: plaid_client_id
+  base-url: https://sandbox.plaid.com
+  client-id: plaid_client_id
   secret: plaid_secret
