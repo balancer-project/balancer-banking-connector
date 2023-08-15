@@ -70,7 +70,9 @@ class PlaidConfig(
     }
 
     @Bean
-    fun plaidApi(@Qualifier("plaidApiClient") apiClient: ApiClient): PlaidApi {
+    fun plaidApi(
+        @Qualifier("plaidApiClient") apiClient: ApiClient,
+    ): PlaidApi {
         return PlaidApi(apiClient)
     }
 
