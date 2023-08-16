@@ -4,6 +4,7 @@ info:
   version: 0.0.1
 tags:
   - name: Bank Link
+  - name: Bank Link Webhook
 paths:
   /v1/bank-link/create-link-token:
     post:
@@ -60,6 +61,23 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         default:
           $ref: '#/components/responses/UnexpectedError'
+  /v1/bank-link/notify-update:
+    post:
+      operationId: notifyUpdate
+      tags:
+        - Bank Link Webhook
+      summary: Notifies the connector of a banking information update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotifyUpdateRequestBody'
+      responses:
+        '200':
+          description: Accepted
+        default:
+          $ref: '#/components/responses/UnexpectedError'
 components:
   schemas:
     Error:
@@ -74,6 +92,70 @@ components:
           description: >-
             A human-readable explanation specific to this occurrence of the
             problem
+    NotifyUpdateRequestBody:
+      type: object
+      description: The body of a notify update request
+      required:
+        - webhook_type
+        - webhook_code
+        - item_id
+        - environment
+      properties:
+        webhook_type:
+          type: string
+          description: The type of webhook
+          example: TRANSACTIONS
+        webhook_code:
+          type: string
+          description: The code of the webhook
+          example: INITIAL_UPDATE
+        item_id:
+          type: string
+          description: The id of the Item the webhook relates to
+          example: wz666MBjYWTp2PDzzggYhM6oWWmBb
+        environment:
+          type: string
+          description: The environment of the webhook
+          example: production
+        initial_update_complete:
+          type: boolean
+          description: |
+            Indicates if initial pull information is available, present in the SYNC_UPDATES_AVAILABLE webhook
+          example: true
+        historical_update_complete:
+          type: boolean
+          description: |
+            Indicates if historical pull information is available, present in the SYNC_UPDATES_AVAILABLE webhook
+          example: true
+        account_ids:
+          type: array
+          description: |
+            A list of account ids for accounts that have new or updated recurring transactions data, present in the
+            RECURRING_TRANSACTIONS_UPDATE webhook
+          items:
+            type: string
+        error:
+          oneOf:
+            - type: string
+              description: |
+                The error code associated with the webhook, present in the INITIAL_UPDATE webhook
+            - type: object
+              description: |
+                The error object associated with the webhook, present in the HISTORICAL_UPDATE, DEFAULT_UPDATE,
+                DEFAULT_UPDATE and TRANSACTIONS_REMOVED webhooks
+              additionalProperties: true
+        new_transactions:
+          type: integer
+          description: |
+            The number of new, unfetched transactions available, present in the INITIAL_UPDATE and HISTORICAL_UPDATE
+            webhooks
+        removed_transactions:
+          type: array
+          description: |
+            A list of transaction ids corresponding to the removed transactions, present in the TRANSACTIONS_REMOVED
+            webhook
+          items:
+            type: string
   responses:
     CreateLinkTokenResponse:
       description: A response containing a newly created Link token
