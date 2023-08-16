@@ -3,13 +3,13 @@ info:
   title: Balancer Banking Connector
   version: 0.0.1
 tags:
-  - name: Bank Account Link
+  - name: Bank Link
 paths:
-  /v1/bank-account-link/create-link-token:
+  /v1/bank-link/create-link-token:
     post:
       operationId: createLinkToken
       tags:
-        - Bank Account Link
+        - Bank Link
       summary: Creates a Link token
       requestBody:
         required: true
@@ -31,11 +31,11 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         default:
           $ref: '#/components/responses/UnexpectedError'
-  /v1/bank-account-link/set-public-token:
+  /v1/bank-link/set-public-token:
     post:
       operationId: setPublicToken
       tags:
-        - Bank Account Link
+        - Bank Link
       summary: Sets a public token returned by Link
       requestBody:
         required: true
