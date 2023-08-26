@@ -5,7 +5,7 @@ import io.juancrrn.balancerbankingconnector.restserver.api.models.CreateLinkToke
 import io.juancrrn.balancerbankingconnector.restserver.api.models.CreateLinkTokenRequest
 import io.juancrrn.balancerbankingconnector.restserver.api.models.SetPublicTokenRequest
 import io.juancrrn.balancerbankingconnector.restserver.api.requests.ext.toCommand
-import io.juancrrn.balancerbankingconnector.usecases.UseCaseDispatcher
+import io.juancrrn.balancerbankingconnector.application.usecases.UseCaseDispatcher
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

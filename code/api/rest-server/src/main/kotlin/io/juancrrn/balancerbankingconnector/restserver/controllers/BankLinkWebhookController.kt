@@ -3,7 +3,7 @@ package io.juancrrn.balancerbankingconnector.restserver.controllers
 import io.juancrrn.balancerbankingconnector.restserver.api.BankLinkWebhookApi
 import io.juancrrn.balancerbankingconnector.restserver.api.models.NotifyUpdateRequestBody
 import io.juancrrn.balancerbankingconnector.restserver.api.requests.ext.toCommand
-import io.juancrrn.balancerbankingconnector.usecases.UseCaseDispatcher
+import io.juancrrn.balancerbankingconnector.application.usecases.UseCaseDispatcher
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 

@@ -1,6 +1,6 @@
 package io.juancrrn.balancerbankingconnector.restserver.api.requests.ext
 
-import io.juancrrn.balancerbankingconnector.commands.NotifyUpdateCommand
+import io.juancrrn.balancerbankingconnector.application.commands.NotifyUpdateCommand
 import io.juancrrn.balancerbankingconnector.restserver.api.models.NotifyUpdateRequestBody
 
 fun NotifyUpdateRequestBody.toCommand(): NotifyUpdateCommand {

@@ -1,6 +1,6 @@
 package io.juancrrn.balancerbankingconnector.domain.exceptions
 
-import io.juancrrn.balancerbankingconnector.valueobjects.PlaidPublicToken
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidPublicToken
 
 class InvalidPlaidPublicTokenException(
     val publicToken: PlaidPublicToken,

@@ -1,7 +1,7 @@
 package io.juancrrn.balancerbankingconnector.domain.exceptions
 
-import io.juancrrn.balancerbankingconnector.valueobjects.PlaidInstitutionId
-import io.juancrrn.balancerbankingconnector.valueobjects.UserId
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidInstitutionId
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
 
 class UserAndInstitutionAlreadyLinkedException(
     val userId: UserId,
