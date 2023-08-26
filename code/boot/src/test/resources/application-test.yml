@@ -3,6 +3,11 @@ spring:
     url: r2dbc:postgresql://localhost:5432/banking-connector-db
     username: banking-connector
     password: local-dev
+  liquibase:
+    change-log: classpath:database/changelog/changelog-master.yaml
+    url: jdbc:postgresql://localhost:5432/banking-connector-db
+    user: banking-connector
+    password: local-dev
 
 plaid:
   base-url: https://sandbox.plaid.com
