@@ -49,6 +49,9 @@ paths:
                   type: string
                   format: uuid
                   description: The id of the Balancer user for which the token was created
+                institutionId:
+                  type: string
+                  description: The id of the institution associated with the token
                 publicToken:
                   type: string
                   description: The public token returned by Link

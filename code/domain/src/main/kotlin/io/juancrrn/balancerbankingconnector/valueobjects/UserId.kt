@@ -5,4 +5,4 @@ import java.util.UUID
 /**
  * An identifier for a Balancer user.
  */
-typealias UserId = UUID
+data class UserId(val id: UUID)

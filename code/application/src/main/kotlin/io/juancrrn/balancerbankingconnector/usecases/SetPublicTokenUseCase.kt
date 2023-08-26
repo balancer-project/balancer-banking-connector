@@ -2,28 +2,44 @@ package io.juancrrn.balancerbankingconnector.usecases
 
 import io.juancrrn.balancerbankingconnector.commands.CommandUseCase
 import io.juancrrn.balancerbankingconnector.commands.SetPublicTokenCommand
-import io.juancrrn.balancerbankingconnector.repositories.ItemRepository
+import io.juancrrn.balancerbankingconnector.entities.PlaidItem
+import io.juancrrn.balancerbankingconnector.repositories.PlaidItemRepository
 import io.juancrrn.balancerbankingconnector.repositories.UserRepository
-import io.juancrrn.balancerbankingconnector.valueobjects.PublicToken
+import io.juancrrn.balancerbankingconnector.repositories.assertNotAlreadyLinked
+import io.juancrrn.balancerbankingconnector.valueobjects.PlaidInstitutionId
+import io.juancrrn.balancerbankingconnector.valueobjects.PlaidPublicToken
+import io.juancrrn.balancerbankingconnector.valueobjects.UserId
 import org.springframework.stereotype.Component
 
 @Component
 class SetPublicTokenUseCase(
     // private val validator: Validator,
     private val userRepository: UserRepository,
-    private val itemRepository: ItemRepository,
+    private val plaidItemRepository: PlaidItemRepository,
 ) : CommandUseCase<SetPublicTokenCommand, Unit> {
 
     override suspend fun dispatch(command: SetPublicTokenCommand) {
         // TODO: validate command, error handling, etc.
         // validator.assertValid(command)
 
-        userRepository.assertExists(command.userId!!)
+        val userId = UserId(command.userId!!)
+        val institutionId = PlaidInstitutionId(command.institutionId!!)
 
-        val publicToken = PublicToken(command.publicToken!!)
+        userRepository.assertExists(userId)
 
-        val (itemId, accessToken) = itemRepository.exchangePublicToken(publicToken)
+        plaidItemRepository.assertNotAlreadyLinked(userId, institutionId)
 
-        userRepository.associateItem(command.userId, itemId, accessToken)
+        val publicToken = PlaidPublicToken(command.publicToken!!)
+
+        val (itemId, accessToken) = plaidItemRepository.exchangePublicToken(publicToken)
+
+        plaidItemRepository.save(
+            PlaidItem(
+                itemId,
+                userId,
+                institutionId,
+                accessToken,
+            ),
+        )
     }
 }

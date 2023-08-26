@@ -1,3 +1,9 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/banking-connector-db
+    username: banking-connector
+    password: local-dev
+
 plaid:
   base-url: https://sandbox.plaid.com
   client-id: plaid-client-id

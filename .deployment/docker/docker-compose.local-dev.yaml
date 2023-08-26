@@ -1,0 +1,12 @@
+version: '3.8'
+name: balancer-banking-connector
+services:
+  db:
+    hostname: db
+    image: postgres:15-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=banking-connector
+      - POSTGRES_PASSWORD=local-dev
+      - POSTGRES_DB=banking-connector-db

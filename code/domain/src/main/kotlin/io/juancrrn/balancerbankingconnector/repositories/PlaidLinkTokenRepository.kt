@@ -1,6 +1,6 @@
 package io.juancrrn.balancerbankingconnector.repositories
 
-import io.juancrrn.balancerbankingconnector.valueobjects.LinkToken
+import io.juancrrn.balancerbankingconnector.valueobjects.PlaidLinkToken
 import io.juancrrn.balancerbankingconnector.valueobjects.UserId
 import org.springframework.stereotype.Repository
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
  * Repository for Plaid Link tokens.
  */
 @Repository
-interface LinkTokenRepository {
+interface PlaidLinkTokenRepository {
 
     /**
      * Creates a Plaid Link token.
@@ -16,5 +16,5 @@ interface LinkTokenRepository {
      * @param userId the user id
      * @return the Plaid Link token
      */
-    suspend fun create(userId: UserId): LinkToken
+    suspend fun create(userId: UserId): PlaidLinkToken
 }

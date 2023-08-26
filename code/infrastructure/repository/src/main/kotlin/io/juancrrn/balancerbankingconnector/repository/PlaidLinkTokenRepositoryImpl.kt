@@ -5,18 +5,18 @@ import com.plaid.client.model.LinkTokenCreateRequest
 import com.plaid.client.model.LinkTokenCreateRequestUser
 import com.plaid.client.model.Products
 import com.plaid.client.request.PlaidApi
-import io.juancrrn.balancerbankingconnector.repositories.LinkTokenRepository
-import io.juancrrn.balancerbankingconnector.valueobjects.LinkToken
+import io.juancrrn.balancerbankingconnector.repositories.PlaidLinkTokenRepository
+import io.juancrrn.balancerbankingconnector.valueobjects.PlaidLinkToken
 import io.juancrrn.balancerbankingconnector.valueobjects.UserId
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.stereotype.Repository
 
 @Repository
-class LinkTokenRepositoryImpl(
+class PlaidLinkTokenRepositoryImpl(
     private val plaidApi: PlaidApi,
-) : LinkTokenRepository {
+) : PlaidLinkTokenRepository {
 
-    override suspend fun create(userId: UserId): LinkToken {
+    override suspend fun create(userId: UserId): PlaidLinkToken {
         val request = LinkTokenCreateRequest()
             .clientName("Balancer") // TODO: set globally by default
             .language("es") // TODO: set globally by default
@@ -30,6 +30,6 @@ class LinkTokenRepositoryImpl(
             .linkToken
         // TODO: handle errors
 
-        return LinkToken(linkToken)
+        return PlaidLinkToken(linkToken)
     }
 }
