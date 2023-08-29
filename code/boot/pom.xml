@@ -22,6 +22,14 @@
         </dependency>
         <dependency>
             <groupId>io.juancrrn</groupId>
+            <artifactId>balancer-banking-connector-event-listeners</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.juancrrn</groupId>
+            <artifactId>balancer-banking-connector-event-publishers</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.juancrrn</groupId>
             <artifactId>balancer-banking-connector-repository</artifactId>
         </dependency>
         <dependency>
