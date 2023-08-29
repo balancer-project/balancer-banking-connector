@@ -18,10 +18,24 @@ class PlaidItemDbAdapter(
     private val entityTemplate: R2dbcEntityTemplate,
 ) {
 
-    suspend fun save(plaidItem: PlaidItem) {
+    suspend fun insert(plaidItem: PlaidItem) {
         entityTemplate
             .insert(plaidItem)
             .awaitSingle()
+    }
+
+    suspend fun update(plaidItem: PlaidItem) {
+        entityTemplate
+            .update(plaidItem)
+            .awaitSingle()
+    }
+
+    suspend fun findById(id: String): PlaidItem? {
+        return entityTemplate
+            .select(PlaidItem::class.java)
+            .matching(query(where(PlaidItem.Field.ID).`is`(id)))
+            .one()
+            .awaitSingleOrNull()
     }
 
     suspend fun findByUserIdAndInstitutionId(userId: UUID, institutionId: String): PlaidItem? {

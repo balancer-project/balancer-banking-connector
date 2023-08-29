@@ -1,7 +1,7 @@
 package io.juancrrn.balancerbankingconnector.domain.repositories
 
-import io.juancrrn.balancerbankingconnector.domain.exceptions.UserAndInstitutionAlreadyLinkedException
 import io.juancrrn.balancerbankingconnector.domain.entities.PlaidItem
+import io.juancrrn.balancerbankingconnector.domain.exceptions.UserAndInstitutionAlreadyLinkedException
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidAccessToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidInstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidItemId

@@ -3,17 +3,17 @@ package io.juancrrn.balancerbankingconnector.infrastructure.repository
 import com.plaid.client.model.ItemPublicTokenExchangeRequest
 import com.plaid.client.model.PlaidError
 import com.plaid.client.request.PlaidApi
-import io.juancrrn.balancerbankingconnector.domain.exceptions.InvalidPlaidPublicTokenException
 import io.juancrrn.balancerbankingconnector.domain.entities.PlaidItem
-import io.juancrrn.balancerbankingconnector.infrastructure.database.adapters.PlaidItemDbAdapter
+import io.juancrrn.balancerbankingconnector.domain.exceptions.InvalidPlaidPublicTokenException
 import io.juancrrn.balancerbankingconnector.domain.repositories.PlaidItemRepository
-import io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext.toEntity
-import io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext.toModel
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidAccessToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidInstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidItemId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidPublicToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
+import io.juancrrn.balancerbankingconnector.infrastructure.database.adapters.PlaidItemDbAdapter
+import io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext.toEntity
+import io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext.toModel
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.stereotype.Repository
 import org.springframework.web.reactive.function.client.WebClientResponseException
@@ -25,7 +25,11 @@ class PlaidItemRepositoryImpl(
 ) : PlaidItemRepository {
 
     override suspend fun save(item: PlaidItem) {
-        plaidItemDbAdapter.save(item.toModel())
+        if (find(item.id) == null) {
+            plaidItemDbAdapter.insert(item.toModel())
+        } else {
+            plaidItemDbAdapter.update(item.toModel())
+        }
     }
 
     override suspend fun find(id: PlaidItemId): PlaidItem? {

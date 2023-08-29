@@ -15,8 +15,11 @@ indent_size = 4
 
 [*.{kt,kts}]
 ktlint_code_style = ktlint_official
-ktlint_ignore_back_ticked_identifier = true
 ktlint_standard = enabled
+ktlint_standard_filename = disabled
+ktlint_ignore_back_ticked_identifier = true
+
+ij_kotlin_imports_layout=*,java.**,javax.**,kotlin.**,^
 
 # Don't allow any wildcard imports
 ij_kotlin_packages_to_use_import_on_demand = unset

@@ -13334,7 +13334,7 @@ components:
           x-hidden-from-docs: true
     TransactionsSyncResponse:
       type: object
-      additionalProperties: true
+      # additionalProperties: true
       description: TransactionsSyncResponse defines the response schema for `/transactions/sync`
       properties:
         added:

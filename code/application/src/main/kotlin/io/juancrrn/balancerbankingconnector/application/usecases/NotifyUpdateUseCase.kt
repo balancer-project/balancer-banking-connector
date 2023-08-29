@@ -2,6 +2,10 @@ package io.juancrrn.balancerbankingconnector.application.usecases
 
 import io.juancrrn.balancerbankingconnector.application.commands.CommandUseCase
 import io.juancrrn.balancerbankingconnector.application.commands.NotifyUpdateCommand
+import io.juancrrn.balancerbankingconnector.domain.events.PlaidSyncUpdatesAvailableEvent
+import io.juancrrn.balancerbankingconnector.domain.events.publishers.ApplicationEventPublisher
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidEnvironment
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidItemId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidWebhookCode
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidWebhookCode.DEFAULT_UPDATE
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidWebhookCode.HISTORICAL_UPDATE
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class NotifyUpdateUseCase(
+    private val applicationEventPublisher: ApplicationEventPublisher,
     private val logger: Logger,
 ) : CommandUseCase<NotifyUpdateCommand, Unit> {
 
@@ -34,23 +39,21 @@ class NotifyUpdateUseCase(
         try {
             when (PlaidWebhookCode.valueOf(webhookCode)) {
                 SYNC_UPDATES_AVAILABLE -> {
-                    // TODO: publish SyncUpdatesAvailableNotified event
+                    applicationEventPublisher.publish(
+                        PlaidSyncUpdatesAvailableEvent(
+                            source = this@NotifyUpdateUseCase,
+                            itemId = PlaidItemId(itemId),
+                            initialUpdateComplete = initialUpdateComplete!!,
+                            historicalUpdateComplete = historicalUpdateComplete!!,
+                            environment = PlaidEnvironment.fromString(environment),
+                        ),
+                    )
                 }
-                RECURRENT_TRANSACTIONS_UPDATE -> {
-                    // TODO: publish RecurrentTransactionsUpdateNotified event
-                }
-                INITIAL_UPDATE -> {
-                    // TODO: publish InitialUpdateNotified event
-                }
-                HISTORICAL_UPDATE -> {
-                    // TODO: publish HistoricalUpdateNotified event
-                }
-                DEFAULT_UPDATE -> {
-                    // TODO: publish DefaultUpdateNotified event
-                }
-                TRANSACTIONS_REMOVED -> {
-                    // TODO: publish TransactionsRemovedNotified event
-                }
+                RECURRENT_TRANSACTIONS_UPDATE -> Unit // Ignored
+                TRANSACTIONS_REMOVED -> Unit // Ignored
+                HISTORICAL_UPDATE -> Unit // Ignored
+                DEFAULT_UPDATE -> Unit // Ignored
+                INITIAL_UPDATE -> Unit // Ignored
             }
         } catch (_: IllegalArgumentException) {
             // Do nothing if we can't or don't want to handle the webhook code

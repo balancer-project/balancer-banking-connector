@@ -77,8 +77,8 @@ paths:
             schema:
               $ref: '#/components/schemas/NotifyUpdateRequestBody'
       responses:
-        '200':
-          description: Accepted
+        '204':
+          description: The notification was received
         default:
           $ref: '#/components/responses/UnexpectedError'
 components:

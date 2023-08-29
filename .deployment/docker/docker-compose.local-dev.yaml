@@ -10,3 +10,15 @@ services:
       - POSTGRES_USER=banking-connector
       - POSTGRES_PASSWORD=local-dev
       - POSTGRES_DB=banking-connector-db
+  wiremock:
+    hostname: wiremock
+    image: wiremock/wiremock:2.35.0-alpine
+    ports:
+      - '8443:8443'
+      - '8444:8444'
+    volumes:
+      - ../../code/boot/src/test/resources/wiremock/:/home/wiremock
+    command:
+      - --port=8443
+      - --https-port=8444
+      - --global-response-templating
