@@ -23,24 +23,29 @@ Este proyecto de Kotlin hace uso de los siguientes paquetes y tecnologías (entr
 El proyecto utiliza la funcionalidad multimódulo de Maven, estructurándose en distintos módulos, principalmente para implementar la división de la arquitectura hexagonal.
 
 ```
+ · · · · · · · · · · · · · · · · · · · · · ·
 balancer-banking-connector/
 └─ code/
-   ├─ api/ - 🧅
-   │  ├─ event-listeners - 📦 Listeners de eventos
-   │  └─ rest-server - 📦 Servidor REST
-   ├─ application - 📦🧅 Capa de aplicación
-   ├─ boot - 📦 Arranque y configuración de la aplicación Spring Boot
-   ├─ domain - 📦🧅 Capa de dominio
-   ├─ infrastructure - 🧅 Capa de infraestructura
-   │  ├─ database - 📦 Adaptadores a base de datos
-   │  ├─ event-publishers - 📦 Publicadores de eventos
-   │  ├─ plaid-web-client - 📦 Cliente web de la API de Plaid
-   │  └─ repository - 📦 Repositorios
+   │
+   ├─ api/                              〔 Capa de infraestructura (API) 〕
+   │  ├─ event-listeners · · · · · · · · Listeners de eventos
+   │  └─ rest-server · · · · · · · · · · Servidor REST
+   │
+   ├─ application                       〔 Capa de aplicación 〕
+   │
+   ├─ domain                            〔 Capa de dominio 〕
+   │
+   ├─ infrastructure                    〔 Capa de infraestructura (persistencia y servicios externos) 〕
+   │  ├─ database  · · · · · · · · · · · Adaptadores a base de datos
+   │  ├─ event-publishers  · · · · · · · Publicadores de eventos
+   │  ├─ plaid-web-client  · · · · · · · Cliente web de la API de Plaid
+   │  └─ repository  · · · · · · · · · · Repositorios
+   │
+   │                                    〔 Meta 〕
+   ├─ boot · · · · · · · · · · · · · · · Arranque y configuración de la aplicación Spring Boot
    └─ reports/
-      └─ jacoco-report-aggregate - 📦 Análisis de cobertura de tests del código/
+      └─ jacoco-report-aggregate · · · · Análisis de cobertura de test del código
 ```
-
-🧅: capas relacionadas con la arquitectura de tipo hexagonal u _onion_.
 
 ## Configuración
 
