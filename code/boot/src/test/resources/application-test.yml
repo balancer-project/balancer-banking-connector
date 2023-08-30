@@ -1,15 +1,15 @@
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/banking-connector-db
-    username: banking-connector
-    password: local-dev
+    url: r2dbc:h2:mem:///~/db/banking-connector-db
   liquibase:
-    change-log: classpath:database/changelog/changelog-master.yaml
-    url: jdbc:postgresql://localhost:5432/banking-connector-db
-    user: banking-connector
-    password: local-dev
+    change-log: classpath:database-test/changelog/changelog-master.yaml
+    url: jdbc:h2:mem:~/db/banking-connector-db;DB_CLOSE_DELAY=-1
 
 plaid:
-  base-url: https://sandbox.plaid.com
-  client-id: plaid_client_id
-  secret: plaid_secret
+  base-url: http://localhost:8082/plaid
+  client-id: test-client-id
+  secret: test-secret
+
+logging:
+  level:
+    reactor.netty.http.client: DEBUG

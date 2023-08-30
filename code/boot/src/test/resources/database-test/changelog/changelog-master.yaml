@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - includeAll:
+      path: database/changelog/ddl
+      errorIfMissingOrEmpty: false
+  - include:
+      file: database-test/dml/data.sql
+      errorIfMissingOrEmpty: false

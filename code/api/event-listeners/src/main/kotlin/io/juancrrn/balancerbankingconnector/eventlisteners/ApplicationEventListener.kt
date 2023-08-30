@@ -6,7 +6,7 @@ import io.juancrrn.balancerbankingconnector.domain.events.PlaidTransactionAddedE
 import io.juancrrn.balancerbankingconnector.domain.events.PlaidTransactionModifiedEvent
 import io.juancrrn.balancerbankingconnector.domain.events.PlaidTransactionRemovedEvent
 import io.juancrrn.balancerbankingconnector.eventlisteners.events.ext.toFetchAndPreprocessTransactionsCommand
-import kotlinx.coroutines.reactor.mono
+import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -18,23 +18,23 @@ class ApplicationEventListener(
 ) {
 
     @EventListener
-    fun handle(event: PlaidSyncUpdatesAvailableEvent) = mono {
+    fun handle(event: PlaidSyncUpdatesAvailableEvent) = runBlocking {
         logger.info("Received PlaidSyncUpdatesAvailableEvent")
         dispatcher.dispatch(event.toFetchAndPreprocessTransactionsCommand())
     }
 
     @EventListener
-    fun handle(event: PlaidTransactionAddedEvent) = mono {
+    fun handle(event: PlaidTransactionAddedEvent) = runBlocking {
         logger.info("Received PlaidTransactionAddedEvent")
     }
 
     @EventListener
-    fun handle(event: PlaidTransactionModifiedEvent) = mono {
+    fun handle(event: PlaidTransactionModifiedEvent) = runBlocking {
         logger.info("Received PlaidTransactionModifiedEvent")
     }
 
     @EventListener
-    fun handle(event: PlaidTransactionRemovedEvent) = mono {
+    fun handle(event: PlaidTransactionRemovedEvent) = runBlocking {
         logger.info("Received PlaidTransactionRemovedEvent")
     }
 }
