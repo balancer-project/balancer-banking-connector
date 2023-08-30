@@ -42,17 +42,17 @@ class SyncAndPreprocessTransactionsUseCase(
             with(syncResult) {
                 added.forEach { transaction ->
                     applicationEventPublisher.publish(
-                        PlaidTransactionAddedEvent(command, item.userId, transaction),
+                        PlaidTransactionAddedEvent(command, item.userId, item.institutionId, transaction),
                     )
                 }
                 modified.forEach { transaction ->
                     applicationEventPublisher.publish(
-                        PlaidTransactionModifiedEvent(command, item.userId, transaction),
+                        PlaidTransactionModifiedEvent(command, item.userId, item.institutionId, transaction),
                     )
                 }
                 removed.forEach { transactionId ->
                     applicationEventPublisher.publish(
-                        PlaidTransactionRemovedEvent(command, item.userId, transactionId),
+                        PlaidTransactionRemovedEvent(command, transactionId),
                     )
                 }
             }

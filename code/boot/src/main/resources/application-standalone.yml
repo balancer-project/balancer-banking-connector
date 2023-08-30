@@ -8,6 +8,34 @@ spring:
     url: jdbc:postgresql://localhost:5432/banking-connector-db
     user: banking-connector
     password: local-dev
+  cloud:
+    stream:
+      default-binder: rabbit
+      bindings:
+        transactionAdded-out-0:
+          content-type: application/json
+          destination: local.balancer_core.transaction_events
+        transactionModified-out-0:
+          content-type: application/json
+          destination: local.balancer_core.transaction_events
+        transactionRemoved-out-0:
+          content-type: application/json
+          destination: local.balancer_core.transaction_events
+      rabbit:
+        default:
+          producer:
+            bindQueue: false
+            declareExchange: false
+        bindings:
+          transactionAdded-out-0:
+            producer:
+              routingKeyExpression: '''balancer_core.transaction_added'''
+          transactionModified-out-0:
+            producer:
+              routingKeyExpression: '''balancer_core.transaction_modified'''
+          transactionRemoved-out-0:
+            producer:
+              routingKeyExpression: '''balancer_core.transaction_removed'''
 
 plaid:
   base-url: https://sandbox.plaid.com

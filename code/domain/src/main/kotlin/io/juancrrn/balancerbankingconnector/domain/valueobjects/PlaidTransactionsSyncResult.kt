@@ -6,5 +6,5 @@ data class PlaidTransactionsSyncResult(
     val nextCursor: PlaidCursor,
     val added: List<PlaidTransaction>,
     val modified: List<PlaidTransaction>,
-    val removed: List<PlaidTransactionId>,
+    val removed: List<TransactionId>,
 )

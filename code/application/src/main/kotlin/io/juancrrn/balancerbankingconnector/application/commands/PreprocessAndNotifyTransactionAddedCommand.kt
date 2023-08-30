@@ -1,13 +1,11 @@
-package io.juancrrn.balancerbankingconnector.domain.events
+package io.juancrrn.balancerbankingconnector.application.commands
 
 import io.juancrrn.balancerbankingconnector.domain.entities.PlaidTransaction
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.InstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
-import org.springframework.context.ApplicationEvent
 
-class PlaidTransactionModifiedEvent(
-    source: Any,
+data class PreprocessAndNotifyTransactionAddedCommand(
     val userId: UserId,
     val institutionId: InstitutionId,
-    val transaction: PlaidTransaction,
-) : ApplicationEvent(source)
+    val plaidTransaction: PlaidTransaction,
+) : Command<Unit>

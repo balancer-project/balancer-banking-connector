@@ -1,8 +1,8 @@
 package io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext
 
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.InstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidAccessToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidCursor
-import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidInstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidItemId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
 import io.juancrrn.balancerbankingconnector.infrastructure.database.models.PlaidItem
@@ -12,7 +12,7 @@ fun PlaidItem.toEntity(): PlaidItemEntity {
     return PlaidItemEntity(
         id = PlaidItemId(id),
         userId = UserId(userId),
-        institutionId = PlaidInstitutionId(institutionId),
+        institutionId = InstitutionId(institutionId),
         accessToken = PlaidAccessToken(accessToken),
         nextCursor = nextCursor?.let { PlaidCursor(it) },
         initialUpdateDone = initialUpdateDone,

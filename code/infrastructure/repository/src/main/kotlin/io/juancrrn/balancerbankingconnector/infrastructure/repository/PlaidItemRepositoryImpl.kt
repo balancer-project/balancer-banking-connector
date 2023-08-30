@@ -6,8 +6,8 @@ import com.plaid.client.request.PlaidApi
 import io.juancrrn.balancerbankingconnector.domain.entities.PlaidItem
 import io.juancrrn.balancerbankingconnector.domain.exceptions.InvalidPlaidPublicTokenException
 import io.juancrrn.balancerbankingconnector.domain.repositories.PlaidItemRepository
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.InstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidAccessToken
-import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidInstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidItemId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidPublicToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
@@ -36,7 +36,7 @@ class PlaidItemRepositoryImpl(
         return plaidItemDbAdapter.findById(id.id)?.toEntity()
     }
 
-    override suspend fun find(userId: UserId, institutionId: PlaidInstitutionId): PlaidItem? {
+    override suspend fun find(userId: UserId, institutionId: InstitutionId): PlaidItem? {
         return plaidItemDbAdapter.findByUserIdAndInstitutionId(userId.id, institutionId.id)?.toEntity()
     }
 

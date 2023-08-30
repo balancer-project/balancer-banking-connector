@@ -8,8 +8,8 @@ import com.plaid.client.request.PlaidApi
 import io.juancrrn.balancerbankingconnector.domain.repositories.PlaidTransactionRepository
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidAccessToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidCursor
-import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidTransactionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidTransactionsSyncResult
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.TransactionId
 import io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext.toEntity
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.stereotype.Repository
@@ -19,7 +19,6 @@ class PlaidTransactionRepositoryImpl(
     private val plaidApi: PlaidApi,
 ) : PlaidTransactionRepository {
 
-    // TODO: not tested (neither manually nor automatically)
     override suspend fun sync(
         accessToken: PlaidAccessToken,
         cursor: PlaidCursor,
@@ -49,11 +48,10 @@ class PlaidTransactionRepositoryImpl(
             PlaidCursor(nextCursor),
             added.map(Transaction::toEntity),
             modified.map(Transaction::toEntity),
-            removed.map(::PlaidTransactionId),
+            removed.map(::TransactionId),
         )
     }
 
-    // TODO: not tested (neither manually nor automatically)
     override suspend fun advanceCursor(accessToken: PlaidAccessToken): PlaidCursor {
         var hasMore = true
         var cursor: String? = null

@@ -2,8 +2,8 @@ package io.juancrrn.balancerbankingconnector.domain.repositories
 
 import io.juancrrn.balancerbankingconnector.domain.entities.PlaidItem
 import io.juancrrn.balancerbankingconnector.domain.exceptions.UserAndInstitutionAlreadyLinkedException
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.InstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidAccessToken
-import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidInstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidItemId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidPublicToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
@@ -37,7 +37,7 @@ interface PlaidItemRepository {
      * @param institutionId the institution id
      * @return the Plaid Item if found, null otherwise
      */
-    suspend fun find(userId: UserId, institutionId: PlaidInstitutionId): PlaidItem?
+    suspend fun find(userId: UserId, institutionId: InstitutionId): PlaidItem?
 
     /**
      * Exchanges a Plaid public token for a Plaid Item id and its Plaid API access token.
@@ -48,7 +48,7 @@ interface PlaidItemRepository {
     suspend fun exchangePublicToken(publicToken: PlaidPublicToken): Pair<PlaidItemId, PlaidAccessToken>
 }
 
-suspend fun PlaidItemRepository.assertNotAlreadyLinked(userId: UserId, institutionId: PlaidInstitutionId) {
+suspend fun PlaidItemRepository.assertNotAlreadyLinked(userId: UserId, institutionId: InstitutionId) {
     if (find(userId, institutionId) != null) {
         throw UserAndInstitutionAlreadyLinkedException(userId, institutionId)
     }

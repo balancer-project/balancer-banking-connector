@@ -6,7 +6,7 @@ import io.juancrrn.balancerbankingconnector.domain.entities.PlaidItem
 import io.juancrrn.balancerbankingconnector.domain.repositories.PlaidItemRepository
 import io.juancrrn.balancerbankingconnector.domain.repositories.UserRepository
 import io.juancrrn.balancerbankingconnector.domain.repositories.assertNotAlreadyLinked
-import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidInstitutionId
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.InstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidPublicToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
 import org.springframework.stereotype.Component
@@ -23,7 +23,7 @@ class SetPublicTokenUseCase(
         // validator.assertValid(command)
 
         val userId = UserId(command.userId!!)
-        val institutionId = PlaidInstitutionId(command.institutionId!!)
+        val institutionId = InstitutionId(command.institutionId!!)
 
         userRepository.assertExists(userId)
 

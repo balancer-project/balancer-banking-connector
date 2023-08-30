@@ -6,6 +6,9 @@ import io.juancrrn.balancerbankingconnector.domain.events.PlaidTransactionAddedE
 import io.juancrrn.balancerbankingconnector.domain.events.PlaidTransactionModifiedEvent
 import io.juancrrn.balancerbankingconnector.domain.events.PlaidTransactionRemovedEvent
 import io.juancrrn.balancerbankingconnector.eventlisteners.events.ext.toFetchAndPreprocessTransactionsCommand
+import io.juancrrn.balancerbankingconnector.eventlisteners.events.ext.toPreprocessAndNotifyTransactionAddedCommand
+import io.juancrrn.balancerbankingconnector.eventlisteners.events.ext.toPreprocessAndNotifyTransactionModifiedCommand
+import io.juancrrn.balancerbankingconnector.eventlisteners.events.ext.toPreprocessAndNotifyTransactionRemovedCommand
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.springframework.context.event.EventListener
@@ -26,15 +29,18 @@ class ApplicationEventListener(
     @EventListener
     fun handle(event: PlaidTransactionAddedEvent) = runBlocking {
         logger.info("Received PlaidTransactionAddedEvent")
+        dispatcher.dispatch(event.toPreprocessAndNotifyTransactionAddedCommand())
     }
 
     @EventListener
     fun handle(event: PlaidTransactionModifiedEvent) = runBlocking {
         logger.info("Received PlaidTransactionModifiedEvent")
+        dispatcher.dispatch(event.toPreprocessAndNotifyTransactionModifiedCommand())
     }
 
     @EventListener
     fun handle(event: PlaidTransactionRemovedEvent) = runBlocking {
         logger.info("Received PlaidTransactionRemovedEvent")
+        dispatcher.dispatch(event.toPreprocessAndNotifyTransactionRemovedCommand())
     }
 }

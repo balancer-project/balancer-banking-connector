@@ -1,7 +1,7 @@
 package io.juancrrn.balancerbankingconnector.domain.entities
 
-import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidTransactionId
+import io.juancrrn.balancerbankingconnector.domain.valueobjects.TransactionId
 
 data class PlaidTransaction(
-    val id: PlaidTransactionId,
+    val id: TransactionId,
 )

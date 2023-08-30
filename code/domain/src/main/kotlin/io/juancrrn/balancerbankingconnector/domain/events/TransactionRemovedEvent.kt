@@ -1,9 +1,7 @@
 package io.juancrrn.balancerbankingconnector.domain.events
 
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.TransactionId
-import org.springframework.context.ApplicationEvent
 
-class PlaidTransactionRemovedEvent(
-    source: Any,
+data class TransactionRemovedEvent(
     val transactionId: TransactionId,
-) : ApplicationEvent(source)
+) : DomainEvent()

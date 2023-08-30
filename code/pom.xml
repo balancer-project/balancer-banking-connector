@@ -34,6 +34,7 @@
         <r2dbc-postgresql.version>1.0.2.RELEASE</r2dbc-postgresql.version>
         <liquibase.version>4.23.1</liquibase.version>
         <wiremock.version>3.0.0-beta-10</wiremock.version>
+        <spring-cloud-stream.version>4.0.4</spring-cloud-stream.version>
     </properties>
 
     <modules>
@@ -186,6 +187,17 @@
                 <groupId>com.github.tomakehurst</groupId>
                 <artifactId>wiremock</artifactId>
                 <version>${wiremock.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-stream</artifactId>
+                <version>${spring-cloud-stream.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+                <version>${spring-cloud-stream.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
