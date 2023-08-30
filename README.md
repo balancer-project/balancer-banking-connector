@@ -23,7 +23,6 @@ Este proyecto de Kotlin hace uso de los siguientes paquetes y tecnologías (entr
 El proyecto utiliza la funcionalidad multimódulo de Maven, estructurándose en distintos módulos, principalmente para implementar la división de la arquitectura hexagonal.
 
 ```
- · · · · · · · · · · · · · · · · · · · · · ·
 balancer-banking-connector/
 └─ code/
    │
