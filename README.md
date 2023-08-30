@@ -4,14 +4,19 @@ Microservicio conector bancario de Balancer.
 
 ## Proyecto de Kotlin con Spring
 
-Este proyecto de Kotlin hace uso de los siguientes paquetes (entre otros):
+Este proyecto de Kotlin hace uso de los siguientes paquetes y tecnologías (entre otros):
 
 - Spring Framework
 - Spring Boot
+- Project Reactor, Spring WebFlux y Netty (cliente y servidor web [NIO](https://en.wikipedia.org/wiki/Non-blocking_I/O_(Java)))
+- PostgreSQL y R2DBC
+- Spring Cloud Stream y RabbitMQ
 - OpenAPI Generator (plugin para Maven, tanto cliente como servidor)
-- Project Reactor y Spring WebFlux
-- Netty (cliente y servidor web [NIO](https://en.wikipedia.org/wiki/Non-blocking_I/O_(Java)))
+- Liquibase
+- Wiremock
+- Maven
 - Ktlint
+- Jacoco
 
 ## Estructura multimódulo de Maven
 
@@ -20,22 +25,47 @@ El proyecto utiliza la funcionalidad multimódulo de Maven, estructurándose en 
 ```
 balancer-banking-connector/
 └─ code/
-   ├─ api/
+   ├─ api/ - 🧅
+   │  ├─ event-listeners - 📦 Listeners de eventos
    │  └─ rest-server - 📦 Servidor REST
    ├─ application - 📦🧅 Capa de aplicación
    ├─ boot - 📦 Arranque y configuración de la aplicación Spring Boot
    ├─ domain - 📦🧅 Capa de dominio
    ├─ infrastructure - 🧅 Capa de infraestructura
+   │  ├─ database - 📦 Adaptadores a base de datos
+   │  ├─ event-publishers - 📦 Publicadores de eventos
    │  ├─ plaid-web-client - 📦 Cliente web de la API de Plaid
    │  └─ repository - 📦 Repositorios
    └─ reports/
       └─ jacoco-report-aggregate - 📦 Análisis de cobertura de tests del código/
-
 ```
+
+🧅: capas relacionadas con la arquitectura de tipo hexagonal u _onion_.
+
+## Configuración
+
+La configuración de la aplicación se realiza a través de ficheros de propiedades YAML. Se puede modificar el fichero
+`application-standalone.yaml` en `code/boot/src/main/resources`, o bien añadir un fichero `application.yaml` en la raíz
+del proyecto, fuera de `code`, que sobreescribirá las propiedades del primero.
 
 ## Arranque
 
-Para arrancar la aplicación, es necesario haber instalado las dependencias de Maven a través del siguiente comando:
+Antes de arrancar la aplicación es necesario disponer de un servidor de base de datos PostgreSQL y una instancia de
+RabbitMQ en ejecución. Para ello, se puede utilizar Docker Compose:
+
+```console
+$ cd .deployment/docker
+
+$ docker compose --file docker-compose.local-dev.yaml up --detach
+```
+
+Si se ha ejecutado antes la aplicación, se recomienda limpiar el proyecto:
+
+```console
+$ mvn clean
+```
+
+Ahora es necesario instalar las dependencias de Maven a través del siguiente comando:
 
 ```console
 $ mvn install

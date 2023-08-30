@@ -4,6 +4,18 @@ spring:
   liquibase:
     change-log: classpath:database-test/changelog/changelog-master.yaml
     url: jdbc:h2:mem:~/db/banking-connector-db;DB_CLOSE_DELAY=-1
+  cloud:
+    stream:
+      bindings:
+        transactionAdded-out-0:
+          content-type: application/json
+          destination: local.balancer_core.transaction_events
+        transactionModified-out-0:
+          content-type: application/json
+          destination: local.balancer_core.transaction_events
+        transactionRemoved-out-0:
+          content-type: application/json
+          destination: local.balancer_core.transaction_events
 
 plaid:
   base-url: http://localhost:8082/plaid
