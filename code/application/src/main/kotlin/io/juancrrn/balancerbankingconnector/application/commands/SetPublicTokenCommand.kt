@@ -1,7 +1,7 @@
 package io.juancrrn.balancerbankingconnector.application.commands
 
+import jakarta.validation.constraints.NotNull
 import java.util.UUID
-import javax.validation.constraints.NotNull
 
 data class SetPublicTokenCommand(
     @field:NotNull

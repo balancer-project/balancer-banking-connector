@@ -6,21 +6,22 @@ import io.juancrrn.balancerbankingconnector.domain.entities.PlaidItem
 import io.juancrrn.balancerbankingconnector.domain.repositories.PlaidItemRepository
 import io.juancrrn.balancerbankingconnector.domain.repositories.UserRepository
 import io.juancrrn.balancerbankingconnector.domain.repositories.assertNotAlreadyLinked
+import io.juancrrn.balancerbankingconnector.domain.validators.assertValid
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.InstitutionId
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidPublicToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
+import jakarta.validation.Validator
 import org.springframework.stereotype.Component
 
 @Component
 class SetPublicTokenUseCase(
-    // private val validator: Validator,
+    private val validator: Validator,
     private val userRepository: UserRepository,
     private val plaidItemRepository: PlaidItemRepository,
 ) : CommandUseCase<SetPublicTokenCommand, Unit> {
 
     override suspend fun dispatch(command: SetPublicTokenCommand) {
-        // TODO: validate command, error handling, etc.
-        // validator.assertValid(command)
+        validator.assertValid(command)
 
         val userId = UserId(command.userId!!)
         val institutionId = InstitutionId(command.institutionId!!)

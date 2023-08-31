@@ -1,7 +1,7 @@
 package io.juancrrn.balancerbankingconnector.domain.validators
 
-import javax.validation.ConstraintViolationException
-import javax.validation.Validator
+import jakarta.validation.ConstraintViolationException
+import jakarta.validation.Validator
 
 fun Validator.assertValid(entity: Any) {
     validate(entity).apply {
