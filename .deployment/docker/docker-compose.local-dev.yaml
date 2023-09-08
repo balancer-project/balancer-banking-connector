@@ -5,7 +5,7 @@ services:
     hostname: db
     image: postgres:15-alpine
     ports:
-      - '5432:5432'
+      - '49163:5432'
     environment:
       - POSTGRES_USER=banking-connector
       - POSTGRES_PASSWORD=local-dev
@@ -14,8 +14,8 @@ services:
     hostname: wiremock
     image: wiremock/wiremock:2.35.0-alpine
     ports:
-      - '8443:8443'
-      - '8444:8444'
+      - '49164:8443'
+      - '49165:8444'
     volumes:
       - ../../code/boot/src/test/resources/wiremock/:/home/wiremock
     command:
@@ -26,8 +26,8 @@ services:
     container_name: rabbitmq
     image: rabbitmq:3.12-management-alpine
     ports:
-      - '5672:5672'
-      - '15672:15672'
+      - '49166:5672'
+      - '49167:15672'
     environment:
       RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
     volumes:

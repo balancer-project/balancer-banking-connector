@@ -1,13 +1,16 @@
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/banking-connector-db
+    url: r2dbc:postgresql://localhost:49163/banking-connector-db
     username: banking-connector
     password: local-dev
   liquibase:
     change-log: classpath:database/changelog/changelog-master.yaml
-    url: jdbc:postgresql://localhost:5432/banking-connector-db
+    url: jdbc:postgresql://localhost:49163/banking-connector-db
     user: banking-connector
     password: local-dev
+  rabbitmq:
+    host: localhost
+    port: 49166
   cloud:
     stream:
       default-binder: rabbit
@@ -36,6 +39,9 @@ spring:
           transactionRemoved-out-0:
             producer:
               routingKeyExpression: '''balancer_core.transaction_removed'''
+
+server:
+  port: 49162
 
 plaid:
   base-url: https://sandbox.plaid.com

@@ -2,6 +2,9 @@ openapi: 3.0.3
 info:
   title: Balancer Banking Connector
   version: 0.0.1
+servers:
+  - url: http://localhost:49162
+    description: Local server
 tags:
   - name: Bank Link
   - name: Bank Link Webhook
@@ -78,7 +81,7 @@ paths:
               $ref: '#/components/schemas/NotifyUpdateRequestBody'
       responses:
         '200':
-          description: Accepted
+          description: The notification was received
         default:
           $ref: '#/components/responses/UnexpectedError'
 components:

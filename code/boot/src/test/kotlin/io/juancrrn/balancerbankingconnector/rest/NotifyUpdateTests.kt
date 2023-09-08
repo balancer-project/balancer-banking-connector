@@ -19,13 +19,12 @@ import org.springframework.messaging.Message
 
 @ExperimentalCoroutinesApi
 @Import(TestChannelBinderConfiguration::class)
-class NotifyUpdateTests : BaseRestTest() {
-
+class NotifyUpdateTest(
     @Autowired
-    private lateinit var entityTemplate: R2dbcEntityTemplate
-
+    private val entityTemplate: R2dbcEntityTemplate,
     @Autowired
-    private lateinit var outputDestination: OutputDestination
+    private val outputDestination: OutputDestination,
+) : BaseRestTest() {
 
     @Test
     fun `notify updates given SYNC_UPDATES_AVAILABLE code and newly created Item then returns OK, advances Item cursor and saves Item initial update and historical update status`() = runTest {
