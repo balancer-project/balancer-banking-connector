@@ -1,13 +1,13 @@
 package io.juancrrn.balancerbankingconnector.infrastructure.eventpublishers.payloads.ext
 
-import io.juancrrn.balancerbankingconnector.domain.events.TransactionAddedEvent
-import io.juancrrn.balancerbankingconnector.infrastructure.eventpublishers.payloads.TransactionAdded
+import io.juancrrn.balancerbankingconnector.domain.events.TransactionModifiedEvent
+import io.juancrrn.balancerbankingconnector.infrastructure.eventpublishers.payloads.TransactionModified
 import java.time.format.DateTimeFormatter
 
-fun TransactionAddedEvent.toPayload(): TransactionAdded {
-    return TransactionAdded(
+fun TransactionModifiedEvent.toPayload(): TransactionModified {
+    return TransactionModified(
         transaction.run {
-            TransactionAdded.Transaction(
+            TransactionModified.Transaction(
                 id = id.id,
                 userId = userId.id.toString(),
                 institutionId = institutionId.id,
