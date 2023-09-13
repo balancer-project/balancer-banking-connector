@@ -38,6 +38,15 @@ class PlaidItemDbAdapter(
             .awaitSingleOrNull()
     }
 
+    suspend fun findByUserId(userId: UUID): List<PlaidItem> {
+        return entityTemplate
+            .select(PlaidItem::class.java)
+            .matching(query(where(USER_ID).`is`(userId)))
+            .all()
+            .collectList()
+            .awaitSingle()
+    }
+
     suspend fun findByUserIdAndInstitutionId(userId: UUID, institutionId: String): PlaidItem? {
         return entityTemplate
             .select(PlaidItem::class.java)

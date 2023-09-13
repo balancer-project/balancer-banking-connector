@@ -40,6 +40,14 @@ interface PlaidItemRepository {
     suspend fun find(userId: UserId, institutionId: InstitutionId): PlaidItem?
 
     /**
+     * Finds all Plaid Items by user id.
+     *
+     * @param userId the user id
+     * @return a list of Plaid Items
+     */
+    suspend fun find(userId: UserId): List<PlaidItem>
+
+    /**
      * Exchanges a Plaid public token for a Plaid Item id and its Plaid API access token.
      *
      * @param publicToken the Plaid public token

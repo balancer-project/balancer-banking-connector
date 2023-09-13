@@ -9,6 +9,27 @@ tags:
   - name: Bank Link
   - name: Bank Link Webhook
 paths:
+  /v1/bank-link:
+    get:
+      operationId: findAllBankLinks
+      tags:
+        - Bank Link
+      summary: Finds all bank links
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: The id of the Balancer user for which to find the items
+      responses:
+        '200':
+          $ref: '#/components/responses/FindAllBankLinksResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
   /v1/bank-link/create-link-token:
     post:
       operationId: createLinkToken
@@ -162,6 +183,24 @@ components:
             webhook
           items:
             type: string
+    BankLink:
+      type: object
+      description: A bank link
+      properties:
+        id:
+          type: string
+          description: The id of the link
+        userId:
+          type: string
+          format: uuid
+          description: The id of the Balancer user associated with the link
+        institutionId:
+          type: string
+          description: The id of the financial institution associated with the link
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time the link was created
   responses:
     CreateLinkTokenResponse:
       description: A response containing a newly created Link token
@@ -173,6 +212,14 @@ components:
               linkToken:
                 type: string
                 description: The newly created Link token
+    FindAllBankLinksResponse:
+      description: A response containing a list of bank links
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/BankLink'
     BadRequest:
       description: Bad request
       content:

@@ -36,6 +36,10 @@ class PlaidItemRepositoryImpl(
         return plaidItemDbAdapter.findById(id.id)?.toEntity()
     }
 
+    override suspend fun find(userId: UserId): List<PlaidItem> {
+        return plaidItemDbAdapter.findByUserId(userId.id).map { it.toEntity() }
+    }
+
     override suspend fun find(userId: UserId, institutionId: InstitutionId): PlaidItem? {
         return plaidItemDbAdapter.findByUserIdAndInstitutionId(userId.id, institutionId.id)?.toEntity()
     }
