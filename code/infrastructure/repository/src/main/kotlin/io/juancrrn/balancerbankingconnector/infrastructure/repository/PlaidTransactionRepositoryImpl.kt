@@ -12,10 +12,12 @@ import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidTransaction
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.TransactionId
 import io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext.toEntity
 import kotlinx.coroutines.reactor.awaitSingle
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Repository
 
 @Repository
 class PlaidTransactionRepositoryImpl(
+    @Qualifier("plaidApiForTransactionsSync")
     private val plaidApi: PlaidApi,
 ) : PlaidTransactionRepository {
 

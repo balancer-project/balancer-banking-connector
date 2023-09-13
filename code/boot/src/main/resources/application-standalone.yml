@@ -45,6 +45,7 @@ server:
 
 plaid:
   base-url: https://sandbox.plaid.com
+  transactions-url: https://sandbox.plaid.com
   client-id: plaid-client-id
   secret: plaid-secret
 

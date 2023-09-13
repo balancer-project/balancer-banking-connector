@@ -15,11 +15,13 @@ import io.juancrrn.balancerbankingconnector.infrastructure.database.adapters.Pla
 import io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext.toEntity
 import io.juancrrn.balancerbankingconnector.infrastructure.repository.models.ext.toModel
 import kotlinx.coroutines.reactor.awaitSingle
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Repository
 import org.springframework.web.reactive.function.client.WebClientResponseException
 
 @Repository
 class PlaidItemRepositoryImpl(
+    @Qualifier("plaidApi")
     private val plaidApi: PlaidApi,
     private val plaidItemDbAdapter: PlaidItemDbAdapter,
 ) : PlaidItemRepository {

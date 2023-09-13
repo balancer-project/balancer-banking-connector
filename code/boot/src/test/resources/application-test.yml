@@ -19,6 +19,7 @@ spring:
 
 plaid:
   base-url: http://localhost:8082/plaid
+  transactions-url: http://localhost:8082/plaid
   client-id: test-client-id
   secret: test-secret
 

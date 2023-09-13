@@ -9,10 +9,12 @@ import io.juancrrn.balancerbankingconnector.domain.repositories.PlaidLinkTokenRe
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.PlaidLinkToken
 import io.juancrrn.balancerbankingconnector.domain.valueobjects.UserId
 import kotlinx.coroutines.reactor.awaitSingle
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Repository
 
 @Repository
 class PlaidLinkTokenRepositoryImpl(
+    @Qualifier("plaidApi")
     private val plaidApi: PlaidApi,
 ) : PlaidLinkTokenRepository {
 

@@ -57,6 +57,16 @@ class PlaidConfig(
             .build()
     }
 
+    @Bean("plaidWebClientForTransactionsSync")
+    fun webClientForTransactionsSync(
+        @Qualifier("plaidWebClientProperties") properties: WebClientProperties,
+        @Qualifier("plaidWebClient") webClient: WebClient,
+    ): WebClient {
+        return webClient.mutate()
+            .baseUrl(properties.transactionsUrl)
+            .build()
+    }
+
     @Bean("plaidApiClient")
     fun apiClient(
         @Qualifier("plaidWebClient") webClient: WebClient,
@@ -69,15 +79,35 @@ class PlaidConfig(
         }
     }
 
-    @Bean
+    @Bean("plaidApiClientForTransactionsSync")
+    fun apiClientForTransactionsSync(
+        @Qualifier("plaidWebClientForTransactionsSync") webClient: WebClient,
+        @Qualifier("plaidWebClientProperties") properties: WebClientProperties,
+    ): ApiClient {
+        return ApiClient(webClient).apply {
+            basePath = properties.transactionsUrl
+            addDefaultHeader(CLIENT_ID_HEADER, properties.clientId)
+            addDefaultHeader(SECRET_HEADER, properties.secret)
+        }
+    }
+
+    @Bean("plaidApi")
     fun plaidApi(
         @Qualifier("plaidApiClient") apiClient: ApiClient,
     ): PlaidApi {
         return PlaidApi(apiClient)
     }
 
+    @Bean("plaidApiForTransactionsSync")
+    fun plaidApiForTransactionsSync(
+        @Qualifier("plaidApiClientForTransactionsSync") apiClient: ApiClient,
+    ): PlaidApi {
+        return PlaidApi(apiClient)
+    }
+
     data class WebClientProperties(
         var baseUrl: String = DEFAULT_BASE_URL,
+        var transactionsUrl: String = DEFAULT_BASE_URL,
         var clientId: String = "",
         var secret: String = "",
     )

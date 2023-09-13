@@ -18276,7 +18276,7 @@ components:
       title: PersonalFinanceCategory
       nullable: true
       type: object
-      additionalProperties: true
+      # additionalProperties: true
       description: |-
         Information describing the intent of the transaction. Most relevant for personal finance use cases, but not limited to such use cases.
 
