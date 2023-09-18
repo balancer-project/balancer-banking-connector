@@ -1,0 +1,150 @@
+def job_name() {
+	def jobNameParts = env.JOB_NAME.tokenize('/') as String[]
+	(jobNameParts.length < 2 ? env.JOB_NAME : jobNameParts[jobNameParts.length - 2])
+}
+
+/*
+   Get the tag name based on file in the repo called VERSION if not exist then get
+   the name of the branch.
+   The content of the file VERSION and the name tag must be equals except in the
+   main branch
+*/
+def job_tag() {
+	def jobNameParts = env.JOB_NAME.tokenize('/') as String[]
+	tag_name = (jobNameParts.length < 2 ? env.JOB_NAME : jobNameParts[1])
+
+	if ( fileExists('VERSION') ) {
+		VERSION = readFile file: 'VERSION'
+		VERSION = VERSION.trim().replaceAll("\n","");
+	} else {
+		echo "No VERSION file found"
+		throw new Exception("Failed. VERSION file must exist in the repo.")
+	}
+
+	VERSION_striped = VERSION.replace("-SNAPSHOT","")
+	tag_name_striped =  tag_name.replace("v", "")
+
+	if ( jobNameParts[1] == "main" || jobNameParts[1].startsWith("PR-") ) {
+		VERSION = VERSION.replace("-SNAPSHOT",".${env.BUILD_ID}")
+	} else if (VERSION_striped != tag_name_striped) {
+		throw new Exception("VERSION not equal to TAG")
+	} else if (VERSION_striped == tag_name_striped) {
+		VERSION = tag_name
+	}
+	
+	VERSION
+}
+
+pipeline {
+    agent any
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+        disableConcurrentBuilds()
+        skipStagesAfterUnstable()
+        timeout(time: 30, unit: 'MINUTES')
+    }
+
+    environment {
+        CI_REGISTRY_IMAGE=''
+        VERSION = ''
+    }
+
+    stages {
+        stage ("Prepare name build") {
+            steps {
+                script {  
+                    try{
+                        VERSION = job_tag()
+                        echo "VERSION: ${VERSION}"
+                    }catch(Exception error){
+                        currentBuild.result = 'ABORTED'
+                        echo "ERROR: ${error}"
+                        error('Quitting')
+                    }
+                }  
+            }
+        }
+
+        /*
+        stage('SonarQube Analysis') {
+            def mvn = tool 'Maven';
+            withSonarQubeEnv() {
+                sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=doclinews_authorization-service_AYNGBaFzP5UrXMjuqgBa"
+            }
+        }
+        */
+
+        stage('Final image build') {
+            when {
+                not {
+                    changeRequest()
+                }
+            }
+            steps {
+                script {
+                    jobname = job_name()
+                    CI_REGISTRY_IMAGE="ghcr.io/balancer-project/$jobname"
+                    
+                    currentBuild.displayName = "${VERSION}"
+                    currentBuild.description = "$jobname:${VERSION}"
+                    
+                    docker.withRegistry('https://ghcr.io/balancer-project/', 'registry_token') { 
+                        def customFinalImage = docker.build("${CI_REGISTRY_IMAGE}:${VERSION}","-f .deployment/docker/build/Dockerfile .")
+                        customFinalImage.push()
+                    }
+                }
+            }
+        }
+
+        stage ('Clean workspace') {
+            when {
+                not {
+                    changeRequest()
+                }
+            }
+            steps{
+                script {
+                    sh "docker rmi ${CI_REGISTRY_IMAGE}:${VERSION}"
+                    cleanWs()
+                }
+            }
+        }
+
+        stage("Launch dev deployment") {
+            when { 
+                branch "main"
+            } 
+            steps {
+                script {
+                    try { 
+                        jobops = job_name()
+                        build(
+                            job: "$jobops-ops/dev", 
+                            parameters: [[$class: 'StringParameterValue', name: 'buildNumber', value: "${VERSION}"]],
+                            propagate: true
+                        )
+                    } catch(Exception error) {
+                        currentBuild.result = 'SUCCESS' 
+                        return
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            emailext ( 
+                subject: "Jenkins build for ${env.JOB_NAME} ${currentBuild.currentResult}",
+                body: "${currentBuild.currentResult} in job ${env.JOB_NAME}.\n For more info: ${env.BUILD_URL}",
+                recipientProviders: [
+                    [$class: 'CulpritsRecipientProvider'],
+                    [$class: 'DevelopersRecipientProvider'],
+                    [$class: 'RequesterRecipientProvider']
+                ]
+            )
+        }
+    }
+}
+
